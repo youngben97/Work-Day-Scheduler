@@ -2,24 +2,18 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
-  // gets id of parent element on click
+  // saves time-block id and textarea input to local storage on click
   var saveBtnEl = $('.saveBtn');
   saveBtnEl.on('click', function () {
-    var timeBlockVal = $(this).parent().attr('id');
-    console.log(timeBlockVal);
-    return timeBlockVal;
+    var timeBlockData = {
+      timeBlockId: $(this).parent().attr('id'),
+      userInput: $(this).siblings('textarea').val()
+    }
+    localStorage.setItem(`${timeBlockData.timeBlockId}`, JSON.stringify(timeBlockData));
   })
-
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-//  var hourNine = $('#hour-9').data('9');
 
 // applies past,present, or future class depending on time
  var currentHour = dayjs().hour();
- console.log(currentHour);
  var timeBlockEl = $('.time-block');
 
  function applyTime () {
@@ -36,6 +30,7 @@ $(function () {
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
+  //local storage set item
 
   //displays the current date
   var today = dayjs();
