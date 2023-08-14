@@ -1,6 +1,6 @@
 # Work Day Scheduler
 
-This repo containes code for a work day scheduler.
+This repo contains code for a work day scheduler.
 
 When the scheduler is opened, the user sees the current day displayed at the top of the page. Below the header are separate sections for each hour of an eight hour work day (in this case, 9-5). The user will see that any hours passed will be colored gray, while the current hour is red, and any future hours are green. The user can write input in any of these sections and click the blue button to save to local storage. When the page is refreshed, the user's input persists.
 
