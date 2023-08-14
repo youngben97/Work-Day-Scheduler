@@ -4,6 +4,7 @@ $(function () {
   var timeBlockEl = $('.time-block');
   var currentHour = dayjs().hour();
   var today = dayjs();
+  console.log(currentHour);
 
   //display the current date
   $('#currentDay').text(today.format('MMM D, YYYY'));
@@ -13,59 +14,35 @@ $(function () {
     var timeBlockId = $(this).parent().attr('id');
     var userInput = $(this).siblings('textarea').val()
     
-    localStorage.setItem(`${timeBlockId}`, userInput);
+    localStorage.setItem(timeBlockId, userInput);
   });
 
   // apply past, present, or future class depending on current time
-  function applyTime () {
-   if (timeBlockEl.attr('time') <= currentHour) {
-    timeBlockEl.addClass('past');
-   } else if (timeBlockEl.attr('time') === currentHour) {
-    timeBlockEl.addClass('present');
-   } else {
-    timeBlockEl.addClass('future');
-   }
-  };
+  function applyTime() {
+    timeBlockEl.each(function() {
+      var timeAttr = parseInt($(this).attr('time'));
+      if (timeAttr < currentHour) {
+        $(this).addClass('past');
+      } else if (timeAttr === currentHour) {
+        $(this).addClass('present');
+      } else {
+        $(this).addClass('future');
+      }
+    });
+  }
   
-  //get user input from local storage and display it to the corresponding time-block
-  function init () {
-    var hourNine = localStorage.getItem('hour-9');
-    if (hourNine !== null) {
-      $('#hour-9 textarea').val(hourNine);
-    };
-    var hourTen = localStorage.getItem('hour-10');
-    if (hourTen !== null) {
-      $('#hour-10 textarea').val(hourTen);
-    };
-    var hourEleven = localStorage.getItem('hour-11');
-    if (hourEleven !== null) {
-      $('#hour-11 textarea').val(hourEleven);
-    };
-    var hourTwelve = localStorage.getItem('hour-12');
-    if (hourTwelve !== null) {
-      $('#hour-12 textarea').val(hourTwelve);
-    };
-    var hourThirteen = localStorage.getItem('hour-13');
-    if (hourThirteen !== null) {
-      $('#hour-13 textarea').val(hourThirteen);
-    };
-    var hourFourteen = localStorage.getItem('hour-14');
-    if (hourFourteen !== null) {
-      $('#hour-14 textarea').val(hourFourteen);
-    };
-    var hourFifteen = localStorage.getItem('hour-15');
-    if (hourFifteen !== null) {
-      $('#hour-15 textarea').val(hourFifteen);
-    };
-    var hourSixteen = localStorage.getItem('hour-16');
-    if (hourSixteen !== null) {
-      $('#hour-16 textarea').val(hourSixteen);
-    };
-    var hourSeventeen = localStorage.getItem('hour-17');
-    if (hourSeventeen !== null) {
-      $('#hour-17 textarea').val(hourSeventeen);
-    };
-  };
+  // get user input from local storage and display it to the corresponding time-block
+  function init() {
+    timeBlockEl.each(function() {
+      var storedValue = localStorage.getItem($(this).attr('id'));
+      var textarea = $(this).find('textarea');
+      
+      if (storedValue !== null) {
+        textarea.val(storedValue);
+      }
+    });
+  }
+
 
   //call functions
   init();
